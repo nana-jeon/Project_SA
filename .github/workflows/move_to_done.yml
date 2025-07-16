@@ -1,0 +1,16 @@
+name: Move to Done when closed
+on:
+  issues:
+    types: [closed]
+jobs:
+  move-to-done:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Move card to Done column
+        uses: actions/github-script@v6
+        with:
+          script: |
+            await github.rest.projects.moveCard({
+              card_id: context.payload.issue.project_card.id,
+              column_id: 12345678  # Replace with your actual "Done" column ID
+            })
